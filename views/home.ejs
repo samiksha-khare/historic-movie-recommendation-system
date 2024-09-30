@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Historic Milestones</title>
+    <meta charset="utf-8">
+    <!-- Bootstrap JavaScript and dependencies for modal-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+</head>
+
+
+<body>
+    <h2 align="center" id="welcome">Welcome to Historic Milestone page!!</h2>
+
+    <!-- Genre dropdown -->
+    <label>Genre</label>
+    <select id="genre"> <!-- show only dropdown list -->
+        <!-- Options will be added here dynamically -->
+    </select>
+
+    <!-- Region dropdown -->
+    <label>Region</label>
+    <select id="region">
+    </select>
+
+    <button type="button" data-toggle="modal" data-target="#showAddModal">Add Event</button>
+
+    <div class="container">
+        <!-- Trigger the modal with a button -->
+
+        <!-- Modal for Add Event -->
+        <div class="modal fade" id="showAddModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label for="eventName">Event Name:</label>
+                        <input type="text" id="addEventName" name="eventName" required><br><br>
+
+                        <label for="startYear">Start Year:</label>
+                        <input type="text" id="addStartYear" name="startYear" required><br><br>
+
+                        <label for="endYear">End Year:</label>
+                        <input type="text" id="addEndYear" name="endYear" ><br><br>
+
+                        <label for="region">Region:</label>
+                        <input type="text" id="addRegion" name="region" required><br><br>
+
+                        <label for="description">Description:</label>
+                        <input type="text" id="addDescription" name="description" ><br><br>
+
+                        <label for="genre">Genre:</label>
+                        <input type="text" id="addGenre" name="genre" ><br><br>
+
+                        <label for="watched">Watched:</label>
+                        <input type="checkbox" id="addWatched" name="watched" ><br><br>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="addNewEvent" data-dismiss="modal">Add Event</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Event details Modal -->
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="eventModalLabel">Event Details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Event Details -->
+                    <div class="event-detail">
+                        <label for="event_name">Event Name:</label>
+                        <span id="event_name"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_start_year">Start Year:</label>
+                        <span id="event_start_year"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_end_year">End Year:</label>
+                        <span id="event_end_year"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_region">Region Of Event:</label>
+                        <span id="event_region"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_description">Description:</label>
+                        <span id="event_description"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_genres">Genres:</label>
+                        <span id="event_genres"></span>
+                    </div>
+
+                    <div class="event-detail">
+                        <label for="event_references" style="display: block;">References:</label>
+                        <div id="event_references"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="edit_button" id="edit_event" data-dismiss="modal" aria-label="Edit">Edit</button>
+                    <button type="button" class="delete_button" id="delete_event" data-dismiss="modal" aria-label="Delete">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Edit Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="eventName">Event Name:</label>
+                    <input type="text" id="editEventName" name="eventName" required><br><br>
+
+                    <label for="startYear">Start Year:</label>
+                    <input type="text" id="editStartYear" name="startYear" required><br><br>
+
+                    <label for="endYear">End Year:</label>
+                    <input type="text" id="editEndYear" name="endYear" ><br><br>
+
+                    <label for="region">Region:</label>
+                    <input type="text" id="editRegion" name="region" required><br><br>
+
+                    <label for="description">Description:</label>
+                    <input type="text" id="editDescription" name="description" ><br><br>
+
+                    <div>
+                        <label for="genres">Genres:</label>
+                        <input type="text" id="editGenres" name="genres"><br><br>
+                        <ul id="deleteGenres"></ul><br><br>
+                    </div>
+                    <label for="references">References:</label>
+                    <div id="editReferences"></div>
+                    <!--                    watched is defined within editReferences in json-->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="save_button" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Table with S.No, Name, Start year -->
+    <table id="eventsTable">
+        <thead>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Start Year</th>
+        </thead>
+        <tbody>
+        <!-- Rows will be added here dynamically using javascript-->
+        </tbody>
+    </table>
+</body>
+
+<!--<script src="/public/js/home_not_used.js"></script>-->
+<script src="/public/js/event_handlers.js"></script>
+<script src="/public/js/api_calls.js"></script>
+<script src="/public/js/populate_ui.js"></script>
+</html>
