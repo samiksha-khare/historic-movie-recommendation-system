@@ -10,6 +10,11 @@ select {
     margin: 30px 30px 15px 5px;
 }
 
+.modal-dialog {
+    max-width: 800px;    /* whatever absolute width you want */
+    width: 90%;          /* or a % of the viewport */
+}
+
 td, th {
     border: 1px solid #000000;
     text-align: left;
@@ -41,4 +46,55 @@ input[type=checkbox], input[type=radio] {
 
 .watch_label {
     margin-left: 15px;
+}
+
+#movieRecommendationButton {
+    margin-top: 25px;
+    float: right;
+}
+
+.movie-poster {
+    width: 15%;
+}
+/* Container: flex or grid for side-by-side layout */
+#event_movies {
+    display: flex;            /* or: display: grid; grid-template-columns: repeat(auto-fill,minmax(154px,1fr)); */
+    flex-wrap: wrap;
+    gap: 12px;                /* space between items */
+    justify-content: center;  /* center the row */
+    padding: 16px;
+}
+
+/* Each thumb wrapper */
+.movie-thumb {
+    flex: 0 0 auto;           /* don’t stretch past its content */
+    transition: transform .2s;
+}
+
+/* Poster image styling */
+.movie-thumb img {
+    display: block;
+    width: 154px;             /* match your TMDB thumb size */
+    height: auto;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Hover zoom effect */
+.movie-thumb:hover {
+    transform: scale(1.05);
+}
+
+/* Increase the size of all text inputs and textareas in your modal */
+input, textarea {
+    min-height: 3rem;
+}
+
+input[type="text"] {
+    resize: both;
+    overflow: auto;
+}
+
+#addDescription {
+    width: 80%;
 }

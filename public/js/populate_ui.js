@@ -47,29 +47,70 @@ async function populateTable(event_name_year) {
             // Update the inner HTML of the event_genres element
             document.getElementById("event_genres").innerHTML = genres_list.join(", ");
 
-            document.getElementById('event_references').innerHTML = ''; // '' represents that everytime inner html is blank for that particular id
-            console.log("response.references:", response.references);
-            for (let j= 0; j < response.references.length; j++) {
+            // let movies = [];
+            // for (let j= 0; j < response.movies.length; j++) {
+            //     movies.push(
+            //         {
+            //             title: response.movies[j].title,
+            //             movie_id: response.movies[j].id,
+            //             poster_path: response.movies[j].poster_path,
+            //         }
+            //     );
+            // }
+            // console.log("movies: ", movies);
+            // let movies_list = movies.map(movie => {
+            //     return `<span>${movie.title}</span>`;
+            // });
+            // Create a comma-separated list
+            // Update the inner HTML of the event_movies element
+            // document.getElementById("event_movies").innerHTML = movies_list.join(", ");
 
-                if(response.references[j].ref != null) {
-                    const div = document.createElement('div');
-                    const refHtml = `<a href="${response.references[j].ref}" target="_blank">${response.references[j].ref} </a>`; // target="_blank" -> open hyperlink in new tab
+            // 1. Define the TMDB image base URL (you can pick any size available: w200, w300, w500, etc.)
+            const TMDB_BASE_URL = 'https://image.tmdb.org/t/p/w92';
 
-                    let watchedHtml = '';
-
-                    if (response.references[j].watched === 1) {
-                        watchedHtml = `<label class='watch_label'>Watched:</label><span>Yes</span></br>`;
-                    }
-                    else {
-                        watchedHtml = `<label class='watch_label'>Watched:</label><span>No</span></br>`;
-                    }
-
-                    div.innerHTML = refHtml + watchedHtml;
-                    document.getElementById("event_references").appendChild(div);
-                }
-
-
+// 2. Build up your movies array as you had before…
+            let movies = [];
+            for (let j = 0; j < response.movies.length; j++) {
+                movies.push({
+                    title:       response.movies[j].title,
+                    movie_id:    response.movies[j].id,
+                    poster_path: response.movies[j].poster_path,
+                });
             }
+
+// 3. Map to <img> tags instead of <span> titles
+           const TMDB_DETAIL_BASE = 'https://www.themoviedb.org/movie';
+
+            let moviesHtml = movies
+              .map(movie => {
+                // build poster src (fallback to placeholder if missing)
+                const src = movie.poster_path
+                  ? `${TMDB_BASE_URL}${movie.poster_path}`
+                  : 'path/to/your-placeholder.jpg';
+
+                // return poster + title with link
+                return `
+                  <div class="movie-poster">
+                    <img
+                      src="${src}"
+                      alt="${movie.title}"
+                      title="${movie.title}"
+                      loading="lazy"
+                    />
+                    <div class="movie-title">   
+                      <a
+                        href="${TMDB_DETAIL_BASE}/${movie.movie_id}"
+                        target="_blank"
+                        rel="noopener"
+                      >${movie.title.split(":")[0]}</a>
+                    </div>
+                  </div>
+                `;
+              })
+              .join('');
+
+            // 4. Inject into the page
+            document.getElementById('event_movies').innerHTML = moviesHtml;
 
             document.getElementById("edit_event").value = event.target.id;
             document.getElementById("delete_event").value = event.target.id;
@@ -137,25 +178,25 @@ function populateEditPopUp(data, eventID) {
 
 
     // to get multiple references and watched checkbox
-    document.getElementById('editReferences').innerHTML = '';
-    for (let j= 0; j < data.references.length; j++) {
-        console.log("data.references[j]: ", data.references[j]);
-        const div = document.createElement('div');
-        const refHtml = `<input type="text" data-ref-id=${j} id="editRef" name="references" value="${data.references[j].ref}">`;
+    // document.getElementById('editReferences').innerHTML = '';
+    // for (let j= 0; j < data.references.length; j++) {
+    //     console.log("data.references[j]: ", data.references[j]);
+    //     const div = document.createElement('div');
+    //     const refHtml = `<input type="text" data-ref-id=${j} id="editRef" name="references" value="${data.references[j].ref}">`;
 
-        let watchedHtml = '';
+    //     let watchedHtml = '';
 
-        if (data.references[j].watched === 1) {
-            watchedHtml = `<label class="watch_label">Watched:</label><input data-watched-id=${j} id="editWatch" type="checkbox" checked></br>`;
-        } else {
-            console.log("here in else");
-            watchedHtml = `<label class="watch_label">Watched:</label><input data-watched-id=${j} id="editWatch" type="checkbox"></br>`;
-        }
+    //     if (data.references[j].watched === 1) {
+    //         watchedHtml = `<label class="watch_label">Watched:</label><input data-watched-id=${j} id="editWatch" type="checkbox" checked></br>`;
+    //     } else {
+    //         console.log("here in else");
+    //         watchedHtml = `<label class="watch_label">Watched:</label><input data-watched-id=${j} id="editWatch" type="checkbox"></br>`;
+    //     }
 
-        div.innerHTML = refHtml + watchedHtml;
+    //     div.innerHTML = refHtml + watchedHtml;
 
-        document.getElementById("editReferences").appendChild(div);
-    }
+    //     document.getElementById("editReferences").appendChild(div);
+    // }
 
 
     document.getElementById("save_button").value = eventID;

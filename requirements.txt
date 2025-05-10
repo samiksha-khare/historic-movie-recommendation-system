@@ -1,0 +1,13 @@
+kafka-python
+requests
+# json
+pandas
+tqdm
+python-dotenv
+sqlalchemy
+mysql-connector-python
+pymysql
+numpy
+scikit-learn
+nltk
+# urllib

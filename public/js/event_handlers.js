@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // // Populate Genre and Region Dropdown
         // populateGenreListInDropdown(data.genres);
         // populateRegionListInDropdown(data.regions);
-        
+
         await populatePageContent();
 
     } catch (error) {
@@ -38,12 +38,6 @@ document.getElementById('region').addEventListener('change', async (region) => {
 
 // Submit new event
 document.getElementById('addNewEvent').addEventListener('click', async () => {
-    let watched = document.getElementById('addWatched').value;
-    if(watched === 'on') {
-        watched = true;
-    } else {
-        watched = false;
-    }
     const newEventDetails = {
         'name' : document.getElementById('addEventName').value || '',
         'start_year' : document.getElementById('addStartYear').value || null,
@@ -51,7 +45,7 @@ document.getElementById('addNewEvent').addEventListener('click', async () => {
         'region' : document.getElementById('addRegion').value || '',
         'description' : document.getElementById('addDescription').value || '',
         'genre' : document.getElementById('addGenre').value || '',
-        'watched' : watched,
+        'watched' : false,
     };
     console.log("newEventDetails: ", newEventDetails);
     await addNewEvent(newEventDetails);
@@ -105,16 +99,16 @@ async function fetchUpdatedEventDetails(id){
         'end_year' : document.getElementById('editEndYear').value || null,
         'region' : document.getElementById('editRegion').value || '',
         'description' : document.getElementById('editDescription').value || '',
-        'watched': document.getElementById('editWatch').checked,
+        'watched': false,
     };
 
     if (document.getElementById('editGenres').value.trim() !== '') {
         fetchedValues.genre = document.getElementById('editGenres').value.trim();
     }
 
-    if (document.getElementById('editRef').value.trim() !== '') {
-        fetchedValues.ref = document.getElementById('editRef').value.trim();
-    }
+    // if (document.getElementById('editRef').value.trim() !== '') {
+    //     fetchedValues.ref = document.getElementById('editRef').value.trim();
+    // }
 
     console.log(fetchedValues);
     return fetchedValues;

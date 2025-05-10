@@ -1,4 +1,5 @@
 import express from 'express';
+import  KafkaProducer  from "../services/HistoricEventsPublish.js";
 import {
     addEvent,
     addGenre,
@@ -17,7 +18,8 @@ import {
     getRegions,
     updateEvent,
     updateGenre,
-    updateRef
+    updateRef,
+    getMovieDetailsByEventId,
 } from "../models/database.js";
 
 const router = express.Router();
@@ -53,18 +55,33 @@ router.get('/events', async function (req,res) {
 
 // Add new event details
 router.post('/events', async function(req,res){
-    const { name, start_year, end_year, region, description, ref, watched, genre } = req.body
+    const { name, start_year, end_year, region, description, watched, genre } = req.body
     const add_event = await addEvent(name, start_year, end_year, region, description);
 
     const event_id = add_event.insertId;
-    const add_ref = await addRef(ref, watched, event_id);
+    // const add_ref = await addRef(ref, watched, event_id);
     const add_genre = await addGenre(genre,event_id);
 
     const result = {
         "add_event" : add_event,
-        "add_ref" : add_ref,
+        // "add_ref" : add_ref,
         "add_genre" : add_genre
     }
+
+    // Publish the event to Kafka
+    const kafkaProducer = new KafkaProducer({
+        clientId: 'historic-event-app',
+        brokers: ['host.docker.internal:9092'],
+    });
+
+    const kafkaMessage = {
+        id: event_id,
+        ... req.body
+    };
+
+    console.log('Kafka Producer connected' + JSON.stringify(kafkaMessage));
+    await kafkaProducer.sendEvent('topic-historic-data', JSON.stringify(kafkaMessage));
+
     res.send(result);
 })
 
@@ -92,11 +109,13 @@ router.get('/event/:id', async function(req,res){
     const id = req.param('id');
     const event_details = await getEventById(id);
     const genres = await getGenresById(id);
-    const references = await getReferencesById(id);
+    const movies = await getMovieDetailsByEventId(id);
+    // const references = await getReferencesById(id);
     const result = {
         "event_details" : event_details,
         "genres" : genres,
-        "references" : references
+        "movies" : movies,
+        // "references" : references
     }
     res.send(result);
 })
@@ -104,17 +123,32 @@ router.get('/event/:id', async function(req,res){
 // Update event details for a given event id
 router.post('/event/:id', async function(req,res){
     const id = req.param('id');
-    const { name, start_year, end_year, region, description, ref, watched, genre } = req.body
+    const { name, start_year, end_year, region, description, watched, genre } = req.body
 
     const update_event = await updateEvent(name, start_year, end_year, region, description, id);
-    const update_ref = await updateRef(ref, watched, id);
+    // const update_ref = await updateRef(ref, watched, id);
     const update_genre = await updateGenre(genre,id);
 
     const result = {
         "update_event" : update_event,
-        "update_ref" : update_ref,
+        // "update_ref" : update_ref,
         "update_genre" : update_genre
     }
+
+    // Publish the event to Kafka
+    const kafkaProducer = new KafkaProducer({
+        clientId: 'historic-event-app',
+        brokers: ['host.docker.internal:9092'],
+    });
+
+    const kafkaMessage = {
+        id,
+        ... req.body
+    };
+
+    console.log('Kafka Producer connected' + JSON.stringify(kafkaMessage));
+    await kafkaProducer.sendEvent('topic-historic-data', JSON.stringify(kafkaMessage));
+
     res.send(result);
 })
 
@@ -122,11 +156,11 @@ router.post('/event/:id', async function(req,res){
 router.delete('/event/:id', async function(req,res){
     const id = req.param('id');
     const delete_event_id_from_genre = await deleteEventIdFromGenre(id);
-    const delete_event_id_from_ref = await deleteEventIdFromRef(id);
+    // const delete_event_id_from_ref = await deleteEventIdFromRef(id);
     const delete_id_from_events = await deleteEventFromEvents(id);
     const result = {
         "delete_event_id_from_genre" : delete_event_id_from_genre,
-        "delete_event_id_from_ref" : delete_event_id_from_ref,
+        // "delete_event_id_from_ref" : delete_event_id_from_ref,
         "delete_id_from_events" : delete_id_from_events
     }
     res.send(result);

@@ -1,0 +1,25 @@
+1. npm install
+2. docker compose up --build
+
+# To run Recommendation Model for each new event added, run the following steps:
+3. Open new terminal: docker exec -it node_app /bin/bash
+    a. Run Historic Events KafkaConsumer for real time events added -
+    ```
+    python HistoricEventsKafkaConsumer.py
+    ```
+
+# To get new movies from TMDB and add them to the database, run the following steps:
+4. Open new terminal: docker exec -it node_app /bin/bash
+    a. Run Movies Events Consumer -
+    ```
+    python MoviesKafkaConsumer.py
+    ```
+    
+
+5. Open new terminal: docker exec -it node_app /bin/bash
+    a. run Movie Kafka Producer for fetching movies from TMDB -
+    ```
+    python MoviesKafkaProducer.py
+    ```
+
+

@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # ✅ Zookeeper Service (Required for Kafka)
+  historic-movie-zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: historic-movie-zookeeper
+    restart: always
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    ports:
+      - "2181:2181"
+    networks:
+      - app_network
+
+  # ✅ Kafka Service
+  historic-movie-kafka:
+    image: bitnami/kafka:3.4.0
+    container_name: historic-movie-kafka
+    restart: always
+    depends_on:
+      - historic-movie-zookeeper
+    environment:
+      KAFKA_ENABLE_KRAFT: false
+      KAFKA_CFG_ZOOKEEPER_CONNECT: historic-movie-zookeeper:2181
+      KAFKA_CFG_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9092
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"  # ✅ Automatically create topics
+      KAFKA_CFG_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_CFG_NUM_PARTITIONS: 1
+    ports:
+      - "9092:9092"
+    networks:
+      - app_network
+
+  # ✅ Node.js Backend (Optional)
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bitnami/node:latest
+    container_name: node_app
+    restart: always
+    depends_on:
+      - historic-movie-kafka
+    environment:
+      KAFKA_BROKER: localhost:9092
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    working_dir: /app
+#    command: ["npm", "start"]
+    command: ["npm", "run", "dev"]
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

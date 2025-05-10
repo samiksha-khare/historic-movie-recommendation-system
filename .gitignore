@@ -2,3 +2,7 @@
 .idea
 node_modules
 .env
+.ipynb_checkpoints
+*.ipynb
+__pycache__/
+env

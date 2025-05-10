@@ -13,20 +13,24 @@
 
 
 <body>
-    <h2 align="center" id="welcome">Welcome to Historic Milestone page!!</h2>
+    <h2 align="center" id="welcome">Welcome to Historic Milestone Website</h2>
+    <div>
+        <label>Genre</label>
+        <select id="genre"> <!-- show only dropdown list -->
+            <!-- Options will be added here dynamically -->
+        </select>
 
+        <!-- Region dropdown -->
+        <label>Region</label>
+        <select id="region">
+        </select>
+
+        <button type="button" data-toggle="modal" data-target="#showAddModal">Add Event</button>
+
+        <button type="button" id="movieRecommendationButton"> <a href="https://nextflick-movie-recommender.streamlit.app/" target="_blank">Movie Recommendation</a> </button>
+
+    </div>
     <!-- Genre dropdown -->
-    <label>Genre</label>
-    <select id="genre"> <!-- show only dropdown list -->
-        <!-- Options will be added here dynamically -->
-    </select>
-
-    <!-- Region dropdown -->
-    <label>Region</label>
-    <select id="region">
-    </select>
-
-    <button type="button" data-toggle="modal" data-target="#showAddModal">Add Event</button>
 
     <div class="container">
         <!-- Trigger the modal with a button -->
@@ -60,8 +64,8 @@
                         <label for="genre">Genre:</label>
                         <input type="text" id="addGenre" name="genre" ><br><br>
 
-                        <label for="watched">Watched:</label>
-                        <input type="checkbox" id="addWatched" name="watched" ><br><br>
+<!--                        <label for="watched">Watched:</label>-->
+<!--                        <input type="checkbox" id="addWatched" name="watched" ><br><br>-->
 
                     </div>
                     <div class="modal-footer">
@@ -115,8 +119,8 @@
                     </div>
 
                     <div class="event-detail">
-                        <label for="event_references" style="display: block;">References:</label>
-                        <div id="event_references"></div>
+                        <label for="event_movies">Recommended Movies:</label>
+                        <span id="event_movies"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -160,10 +164,6 @@
                         <input type="text" id="editGenres" name="genres"><br><br>
                         <ul id="deleteGenres"></ul><br><br>
                     </div>
-                    <label for="references">References:</label>
-                    <div id="editReferences"></div>
-                    <!--                    watched is defined within editReferences in json-->
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" id="save_button" data-dismiss="modal">Save</button>

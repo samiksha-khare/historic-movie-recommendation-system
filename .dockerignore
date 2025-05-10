@@ -1,0 +1,45 @@
+# Ignore node_modules (except when using Docker's multi-stage build)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore environment files (Security Best Practice)
+.env
+
+# Ignore logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+
+# Ignore IDE/editor specific files
+.idea
+.vscode
+*.swp
+*.swo
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore compiled JavaScript & TypeScript files
+dist
+build
+.cache
+
+# Ignore MySQL database dumps (if any)
+*.sql
+*.sqlite
+
+
+**/node_modules
+**/.git
+**/__pycache__
+*.pyc
+.dockerignore
+docker-compose.yml
+*.log

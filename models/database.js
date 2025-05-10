@@ -9,23 +9,29 @@ const sql = mysql.createPool({
 }).promise();
 
 export async function getEventNameYear() {
-    const result = await sql.query("SELECT id,name, start_year from Events order by start_year;");
+    const result = await sql.query("SELECT id, name, start_year from Events order by start_year;");
     return result[0];
 }
 
 export async function getGenres(){
     const result = await sql.query("SELECT DISTINCT genre from Event_Genres order by genre;");
-    return result[0];
+    // Remove empty genres
+    const filtered = result[0].filter(genre => genre.genre !== '');
+    // Remove duplicates
+    return Array.from(new Set(filtered.map(genre => genre.genre))).map(genre => ({genre}));
 }
 
 export async function getRegions(){
     const result = await sql.query("SELECT DISTINCT region from Events order by region;");
-    return result[0];
+    // Remove empty regions
+    const filtered = result[0].filter(region => region.region !== '');
+    // Remove duplicates
+    return Array.from(new Set(filtered.map(region => region.region))).map(region => ({region}));
 }
 
 export async function addEvent(name, start_year, end_year, region, description) {
     const result = await sql.query(
-        `insert into events (name, start_year, end_year, region, description) values (?,?,?,?,?)`,
+        `insert into events (name, start_year, end_year, region, description) values (?,?,?,?, ?)`,
         [name, start_year, end_year, region, description]
         )
     console.log(result[0]);
@@ -43,19 +49,29 @@ export async function addGenre(genre, event_id){
 }
 
 export async function getEventsByRegion(region){
-    const result = await sql.query(`SELECT id, name, start_year from Events where region = ? order by start_year`,[region]);
+    let result = [];
+    if (region === 'All') {
+        result = await sql.query(`SELECT id, name, start_year from Events order by start_year`);
+    } else {
+        result = await sql.query(`SELECT id, name, start_year from Events where region = ? order by start_year`,[region]);
+    }
     // console.log(result[0]);
     return result[0];
 }
 
 export async function getEventsByGenre(genre){
-    const result = await sql.query(
-        `SELECT e.id, e.name, e.start_year from Events as e
-        JOIN Event_Genres as eg ON e.id = eg.event_id
-        WHERE eg.genre = ?
-        ORDER BY e.start_year`,
-        [genre]
-    );
+    let result = [];
+    if (genre === 'All') {
+        result = await sql.query(`SELECT id, name, start_year from Events order by start_year`)
+    } else {
+        result = await sql.query(
+            `SELECT e.id, e.name, e.start_year from Events as e JOIN Event_Genres as eg ON e.id = eg.event_id
+             WHERE eg.genre = ?
+             ORDER BY e.start_year`,
+            [genre]
+        )
+    }
+
     return result[0];
 }
 
@@ -131,6 +147,17 @@ export async function deleteEventFromEvents(id){
 export async function deleteGenreById(id){
     const result = await sql.query(`DELETE FROM Event_Genres where genre_id =?;`,[id]);
     console.log(result[0]);
+    return result[0];
+}
+
+export async function getMovieDetailsByEventId(event_id) {
+    const result = await sql.query(`
+        SELECT m.id, m.title, m.release_date, m.overview, m.poster_path
+        FROM Movies AS m
+                 JOIN Events_Movies AS em ON m.id = em.movie_id
+        WHERE em.event_id = ?
+    `, [event_id]);
+
     return result[0];
 }
 
