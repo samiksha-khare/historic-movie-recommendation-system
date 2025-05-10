@@ -4,7 +4,13 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
+
 # Install system dependencies for Python
+# install e.g. build tools if you need them
+RUN apk add --no-cache \
+      python3 \
+      make \
+      g++ 
 USER root
 RUN apt-get update && apt-get install -y python3 python3-pip
 
