@@ -13,6 +13,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN pip3 install nltk
 RUN python -m nltk.downloader wordnet omw-1.4
+RUN npm install
 
 # Copy Node.js app
 COPY . .
