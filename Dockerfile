@@ -42,4 +42,4 @@ COPY . .
 EXPOSE 3000
 
 # Start Node.js app
-CMD ["npm", "run", "install"]
+CMD ["npm", "start"]
