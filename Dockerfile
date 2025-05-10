@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN pip3 install nltk
-RUN python -m nltk.downloader wordnet omw-1.4
+RUN python3 -m nltk.downloader wordnet omw-1.4
 
 COPY package.json package-lock.json* ./
 RUN npm install --production
