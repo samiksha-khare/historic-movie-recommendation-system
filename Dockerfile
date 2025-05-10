@@ -1,5 +1,5 @@
-# Use Bitnami Node.js base image
-FROM bitnami/node:latest
+# 1. Pick an official Node.js image
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -13,7 +13,9 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN pip3 install nltk
 RUN python -m nltk.downloader wordnet omw-1.4
-RUN npm install
+
+COPY package.json package-lock.json* ./
+RUN npm install --production
 
 # Copy Node.js app
 COPY . .
