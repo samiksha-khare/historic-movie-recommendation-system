@@ -1,5 +1,8 @@
-# 1. Pick an official Node.js image
-FROM node:18-alpine
+# 1. Use a Debian-based Node.js image (has apt-get)
+FROM node:18-bullseye-slim
+
+# 2. Install Python3 and pip via apt
+
 
 # Set working directory
 WORKDIR /app
@@ -7,10 +10,11 @@ WORKDIR /app
 
 # Install system dependencies for Python
 # install e.g. build tools if you need them
-RUN apk add --no-cache \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
       python3 \
-      make \
-      g++ 
+      python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 USER root
 RUN apt-get update && apt-get install -y python3 python3-pip
 
