@@ -2,15 +2,15 @@
 
 A full-stack web application that tracks global historical events and instantly provides movie recommendations that capture each event’s story. You can also pick any movie you love and discover similar films you’ll enjoy.
 
-## 🎬 Demo
+## Demo
 
 Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/Website_Overview)
 
-## 🏗️ Architecture
+## Architecture
 
 ![Architecture](Architecture.png)
 
-## 🚀 Features
+## Features
 
 - **Real-time event ingestion**: Add or update historical events and see recommendations immediately via Kafka streaming.
 - **Movie recommendations**:  
@@ -22,7 +22,7 @@ Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/We
   - Consumers process streams, enrich data, and call the recommendation model.  
 - **Lightweight Node.js web UI**: Browse, search, manage events and view recommendations.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer               | Technology                                                      |
 | ------------------- | --------------------------------------------------------------- |
