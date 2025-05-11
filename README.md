@@ -10,6 +10,12 @@ Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/We
 
 ---
 
+## 🏗️ Architecture
+
+![Architecture](Architecture.png)
+
+---
+
 ## 🚀 Features
 
 - **Real-time event ingestion**: Add or update historical events and see recommendations immediately via Kafka streaming.
@@ -24,10 +30,6 @@ Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/We
 
 ---
 
-## 🏗️ Architecture
-
-![Architecture](Architecture.png)
-
 ## 🛠️ Tech Stack
 
 | Layer               | Technology                                                      |
@@ -38,3 +40,4 @@ Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/We
 | Database            | MySQL                                                           |
 | NLP & Recommendation| Python (scikit-learn TF–IDF & CountVectorizer, pandas, numpy)   |
 | Containerization    | Docker, Docker Compose                                          |
+---
