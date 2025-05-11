@@ -6,8 +6,7 @@ A full-stack web application that tracks global historical events and instantly 
 
 ## 🎬 Demo
 
-Watch a short walkthrough of the live application:  
-[![Website Overview](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://youtu.be/Website_Overview)
+Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/Website_Overview)
 
 ---
 
@@ -27,7 +26,7 @@ Watch a short walkthrough of the live application:
 
 ## 🏗️ Architecture
 
-![Architecture](Historic Event Recommendation Sysytem Architecture.png)
+![Architecture](Architecture.png)
 
 ## 🛠️ Tech Stack
 
