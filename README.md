@@ -4,7 +4,7 @@ A full-stack web application that tracks global historical events and instantly 
 
 ## Demo
 
-Watch a short walkthrough of the application: [Youtube Link](https://youtu.be/Website_Overview)
+Watch a short walkthrough of the application: [Youtube Link](https://www.youtube.com/watch?v=3dnpeLyFooQ)
 
 ## Architecture
 
