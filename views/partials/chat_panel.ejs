@@ -1,0 +1,50 @@
+<!-- AI Chat Panel -->
+<div id="chatPanel" class="chat-panel">
+    <div class="chat-header">
+        <h4>History AI Assistant</h4>
+        <div class="chat-header-actions">
+            <select id="chatMode" class="chat-mode-select">
+                <option value="ask">Q&A</option>
+                <option value="recommend">Movie Search</option>
+                <option value="timeline">Timeline</option>
+                <option value="create">Create Event</option>
+                <option value="compare">Compare Events</option>
+            </select>
+            <button id="chatClose" class="chat-close-btn">&times;</button>
+        </div>
+    </div>
+    <div id="chatMessages" class="chat-messages">
+        <div class="chat-message bot-message">
+            <div class="message-content">
+                Welcome! I'm your History AI Assistant. You can:
+                <ul>
+                    <li><strong>Q&A</strong> — Ask about any historical event</li>
+                    <li><strong>Movie Search</strong> — Find movies by description</li>
+                    <li><strong>Timeline</strong> — Explore events in a time range</li>
+                    <li><strong>Create Event</strong> — Add events via conversation</li>
+                    <li><strong>Compare</strong> — Compare historical events</li>
+                </ul>
+                Try asking: "What caused World War I?"
+            </div>
+        </div>
+    </div>
+    <div id="chatEventConfirm" class="chat-event-confirm" style="display:none;">
+        <div class="event-preview">
+            <h5>Event Preview</h5>
+            <div id="eventPreviewContent"></div>
+        </div>
+        <div class="confirm-actions">
+            <button id="confirmEvent" class="btn btn-success btn-sm">Confirm & Create</button>
+            <button id="editEventChat" class="btn btn-default btn-sm">Edit</button>
+        </div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Ask about history, movies, or events..." autocomplete="off" />
+        <button id="chatSend" class="chat-send-btn">Send</button>
+    </div>
+</div>
+
+<!-- Floating Chat Toggle Button -->
+<button id="chatToggle" class="chat-toggle-btn" title="Open AI Chat">
+    <span class="chat-icon">&#128172;</span>
+</button>

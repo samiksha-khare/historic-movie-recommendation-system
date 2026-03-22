@@ -9,6 +9,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/public/css/chat.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 
@@ -28,6 +30,8 @@
         <button type="button" data-toggle="modal" data-target="#showAddModal">Add Event</button>
 
         <button type="button" id="movieRecommendationButton"> <a href="https://nextflick-movie-recommender.streamlit.app/" target="_blank">Movie Recommendation</a> </button>
+
+        <button type="button" id="compareSelected" style="display:none;" onclick="compareSelectedEvents()">Compare Selected</button>
 
     </div>
     <!-- Genre dropdown -->
@@ -176,6 +180,7 @@
     <!-- Table with S.No, Name, Start year -->
     <table id="eventsTable">
         <thead>
+            <th>Compare</th>
             <th>S.No</th>
             <th>Name</th>
             <th>Start Year</th>
@@ -184,10 +189,13 @@
         <!-- Rows will be added here dynamically using javascript-->
         </tbody>
     </table>
+
+    <%- include('partials/chat_panel') %>
 </body>
 
 <!--<script src="/public/js/home_not_used.js"></script>-->
 <script src="/public/js/event_handlers.js"></script>
 <script src="/public/js/api_calls.js"></script>
 <script src="/public/js/populate_ui.js"></script>
+<script src="/public/js/chat.js"></script>
 </html>

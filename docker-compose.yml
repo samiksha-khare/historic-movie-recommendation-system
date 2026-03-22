@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # ✅ Zookeeper Service (Required for Kafka)
   historic-movie-zookeeper:
-    image: bitnami/zookeeper:latest
+    image: zookeeper:3.9
     container_name: historic-movie-zookeeper
     restart: always
     environment:
@@ -15,9 +15,9 @@ services:
 
   # ✅ Kafka Service
   historic-movie-kafka:
-    image: bitnami/kafka:3.4.0
+    image: confluentinc/cp-kafka:7.9.6
     container_name: historic-movie-kafka
-    restart: always
+    restart: always 
     depends_on:
       - historic-movie-zookeeper
     environment:

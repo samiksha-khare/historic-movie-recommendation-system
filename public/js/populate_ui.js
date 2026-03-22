@@ -7,6 +7,7 @@ async function populateTable(event_name_year) {
         const row = document.createElement('tr');
         // getting the values and adding hyperlink inside <a> </a>
         row.innerHTML = `
+                <td><input type="checkbox" class="compare-checkbox" data-event-id="${event_name_year[i].id}" onchange="toggleCompareButton()" /></td>
                 <td>${i+1}</td>
                 <td> <a class="eventName" id="${event_name_year[i].id}" href="#"> ${event_name_year[i].name}</a></td>
                 <td>${event_name_year[i].start_year}</td>
@@ -97,12 +98,16 @@ async function populateTable(event_name_year) {
                       title="${movie.title}"
                       loading="lazy"
                     />
-                    <div class="movie-title">   
+                    <div class="movie-title">
                       <a
                         href="${TMDB_DETAIL_BASE}/${movie.movie_id}"
                         target="_blank"
                         rel="noopener"
                       >${movie.title.split(":")[0]}</a>
+                    </div>
+                    <div class="movie-chat-links">
+                      <a class="why-link" data-event-id="${event.target.id}" data-movie-id="${movie.movie_id}">Why?</a>
+                      <a class="discuss-link" data-event-id="${event.target.id}" data-movie-id="${movie.movie_id}">Discuss</a>
                     </div>
                   </div>
                 `;
@@ -201,4 +206,20 @@ function populateEditPopUp(data, eventID) {
 
     document.getElementById("save_button").value = eventID;
     $('#editModal').modal('show');
+}
+
+// Compare functionality
+function toggleCompareButton() {
+    const checked = document.querySelectorAll('.compare-checkbox:checked');
+    const btn = document.getElementById('compareSelected');
+    btn.style.display = checked.length >= 2 ? 'inline-block' : 'none';
+    btn.textContent = `Compare Selected (${checked.length})`;
+}
+
+function compareSelectedEvents() {
+    const checked = document.querySelectorAll('.compare-checkbox:checked');
+    const eventIds = Array.from(checked).map(cb => parseInt(cb.dataset.eventId));
+    if (eventIds.length >= 2 && typeof ChatApp !== 'undefined') {
+        ChatApp.openWithCompare(eventIds);
+    }
 }
