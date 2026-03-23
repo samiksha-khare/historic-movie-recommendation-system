@@ -1,100 +1,552 @@
+/* ===== Global Reset & Typography ===== */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    margin: 2%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f7fa;
+    color: #2d3748;
+    line-height: 1.6;
 }
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+
+/* ===== Hero Header ===== */
+.site-header {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 50%, #3182ce 100%);
+    color: white;
+    padding: 40px 24px 32px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
+
+.header-content h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.85;
+    margin: 0;
+}
+
+/* ===== Toolbar ===== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px 32px;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.toolbar-filters {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
 select {
-    margin: 30px 30px 15px 5px;
+    padding: 8px 32px 8px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #2d3748;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    margin: 0;
+    min-height: auto;
+    transition: border-color 0.2s;
 }
 
-.modal-dialog {
-    max-width: 800px;    /* whatever absolute width you want */
-    width: 90%;          /* or a % of the viewport */
+select:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
 }
 
-td, th {
-    border: 1px solid #000000;
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ===== Buttons ===== */
+.btn-primary-action {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: auto;
+}
+.btn-primary-action:hover {
+    background: #2b6cb0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+.btn-secondary-action {
+    background: white;
+    color: #3182ce;
+    border: 1.5px solid #3182ce;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    min-height: auto;
+}
+.btn-secondary-action:hover {
+    background: #ebf8ff;
+    text-decoration: none;
+    color: #2b6cb0;
+}
+
+.btn-compare {
+    background: #805ad5;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: auto;
+}
+.btn-compare:hover {
+    background: #6b46c1;
+}
+
+/* ===== Table ===== */
+.table-container {
+    padding: 0 32px 32px;
+    margin-top: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    font-family: 'Inter', sans-serif;
+}
+
+thead tr {
+    background: linear-gradient(135deg, #1a365d, #2b6cb0);
+}
+
+th {
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 14px 20px;
     text-align: left;
-    padding: 8px;
+    border: none;
+}
+
+.th-compare { width: 70px; text-align: center; }
+.th-sno { width: 70px; text-align: center; }
+.th-name { }
+.th-year { width: 120px; text-align: center; }
+
+td {
+    padding: 12px 20px;
+    border: none;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #f7fafc;
 }
 
+tr:hover {
+    background-color: #ebf8ff;
+    transition: background-color 0.15s;
+}
 
- .event-detail {
-     margin-bottom: 20px;
- }
+/* Table links */
+.eventName {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.eventName:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+/* Compare checkbox */
+.compare-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    min-height: auto;
+    accent-color: #805ad5;
+}
+
+/* ===== Modals ===== */
+.modal-dialog {
+    max-width: 700px;
+    width: 92%;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #1a365d, #2b6cb0);
+    color: white;
+    border: none;
+    padding: 20px 24px;
+}
+
+.modal-header .modal-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.modal-header .close {
+    color: white;
+    opacity: 0.8;
+    font-size: 26px;
+    text-shadow: none;
+}
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 28px 24px;
+}
+
+.modal-footer {
+    border-top: 1px solid #edf2f7;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Form styles in modals */
+.modal-form .form-group {
+    margin-bottom: 18px;
+}
+
+.modal-form .form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.modal-form .form-group.half {
+    flex: 1;
+}
+
+.modal-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.modal-form input[type="text"],
+.modal-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: auto;
+    resize: vertical;
+}
+
+.modal-form input[type="text"]:focus,
+.modal-form textarea:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+.modal-form textarea {
+    min-height: 80px;
+}
+
+/* Modal buttons */
+.btn-save {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-save:hover { background: #2b6cb0; }
+
+.btn-cancel {
+    background: #edf2f7;
+    color: #4a5568;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-cancel:hover { background: #e2e8f0; }
+
+.btn-edit {
+    background: #ecc94b;
+    color: #744210;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-edit:hover { background: #d69e2e; }
+
+.btn-delete {
+    background: #fc8181;
+    color: #742a2a;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-delete:hover { background: #f56565; }
+
+/* ===== Event Detail View ===== */
+.event-detail {
+    margin-bottom: 20px;
+}
+
+.event-detail-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.event-detail-row .event-detail {
+    flex: 1;
+    margin-bottom: 0;
+}
+
 .event-detail label {
-    font-weight: bold;
-    margin-right: 5px;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
 }
+
 .event-detail span {
-    display: inline-block;
-    margin-bottom: 5px;
+    display: block;
+    font-size: 15px;
+    color: #2d3748;
+    line-height: 1.5;
 }
 
-input[type=checkbox], input[type=radio] {
-    margin: 4px 4px 0;
-    margin-top: 1px;
-    line-height: normal;
+/* Genre tags in edit modal */
+.genre-tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.watch_label {
-    margin-left: 15px;
+.genre-tag-list li {
+    background: #ebf8ff;
+    color: #2b6cb0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-#movieRecommendationButton {
-    margin-top: 25px;
-    float: right;
+.genre-tag-list .delete_genre {
+    color: #e53e3e;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+}
+.genre-tag-list .delete_genre:hover {
+    color: #c53030;
+}
+
+/* ===== Movie Posters ===== */
+#event_movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+    padding: 12px 0;
 }
 
 .movie-poster {
-    width: 15%;
-}
-/* Container: flex or grid for side-by-side layout */
-#event_movies {
-    display: flex;            /* or: display: grid; grid-template-columns: repeat(auto-fill,minmax(154px,1fr)); */
-    flex-wrap: wrap;
-    gap: 12px;                /* space between items */
-    justify-content: center;  /* center the row */
-    padding: 16px;
+    width: 120px;
+    text-align: center;
+    transition: transform 0.2s;
 }
 
-/* Each thumb wrapper */
-.movie-thumb {
-    flex: 0 0 auto;           /* don’t stretch past its content */
-    transition: transform .2s;
+.movie-poster:hover {
+    transform: translateY(-4px);
 }
 
-/* Poster image styling */
-.movie-thumb img {
+.movie-poster img {
     display: block;
-    width: 154px;             /* match your TMDB thumb size */
+    width: 100%;
     height: auto;
-    border-radius: 6px;
-    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* Hover zoom effect */
-.movie-thumb:hover {
-    transform: scale(1.05);
+.movie-title {
+    margin-top: 6px;
 }
 
-/* Increase the size of all text inputs and textareas in your modal */
-input, textarea {
-    min-height: 3rem;
+.movie-title a {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2d3748;
+    text-decoration: none;
+    line-height: 1.3;
+    display: block;
+}
+.movie-title a:hover {
+    color: #3182ce;
 }
 
-input[type="text"] {
-    resize: both;
-    overflow: auto;
+/* ===== Footer ===== */
+.site-footer {
+    text-align: center;
+    padding: 24px;
+    color: #a0aec0;
+    font-size: 13px;
+    margin-top: 16px;
 }
 
-#addDescription {
-    width: 80%;
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 28px 16px 24px;
+    }
+    .header-content h1 {
+        font-size: 1.6rem;
+    }
+    .toolbar {
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .toolbar-filters,
+    .toolbar-actions {
+        width: 100%;
+    }
+    .table-container {
+        padding: 0 16px 24px;
+    }
+    .modal-form .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .event-detail-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    td, th {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+
+/* ===== Misc overrides ===== */
+input[type=checkbox], input[type=radio] {
+    margin: 0;
+    min-height: auto;
+}
+
+/* Override bootstrap defaults conflicting with our design */
+.modal-form input, .modal-form textarea {
+    min-height: auto;
 }

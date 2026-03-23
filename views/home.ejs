@@ -3,7 +3,10 @@
 <head>
     <title>Historic Milestones</title>
     <meta charset="utf-8">
-    <!-- Bootstrap JavaScript and dependencies for modal-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -13,182 +16,207 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
-
 <body>
-    <h2 align="center" id="welcome">Welcome to Historic Milestone Website</h2>
-    <div>
-        <label>Genre</label>
-        <select id="genre"> <!-- show only dropdown list -->
-            <!-- Options will be added here dynamically -->
-        </select>
+    <!-- Hero Header -->
+    <header class="site-header">
+        <div class="header-content">
+            <h1 id="welcome">Historic Milestones</h1>
+            <p class="header-subtitle">Explore history through events, movies & AI-powered insights</p>
+        </div>
+    </header>
 
-        <!-- Region dropdown -->
-        <label>Region</label>
-        <select id="region">
-        </select>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-filters">
+            <div class="filter-group">
+                <label for="genre">Genre</label>
+                <select id="genre">
+                    <!-- Options added dynamically -->
+                </select>
+            </div>
 
-        <button type="button" data-toggle="modal" data-target="#showAddModal">Add Event</button>
-
-        <button type="button" id="movieRecommendationButton"> <a href="https://nextflick-movie-recommender.streamlit.app/" target="_blank">Movie Recommendation</a> </button>
-
-        <button type="button" id="compareSelected" style="display:none;" onclick="compareSelectedEvents()">Compare Selected</button>
-
-    </div>
-    <!-- Genre dropdown -->
-
-    <div class="container">
-        <!-- Trigger the modal with a button -->
-
-        <!-- Modal for Add Event -->
-        <div class="modal fade" id="showAddModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label for="eventName">Event Name:</label>
-                        <input type="text" id="addEventName" name="eventName" required><br><br>
-
-                        <label for="startYear">Start Year:</label>
-                        <input type="text" id="addStartYear" name="startYear" required><br><br>
-
-                        <label for="endYear">End Year:</label>
-                        <input type="text" id="addEndYear" name="endYear" ><br><br>
-
-                        <label for="region">Region:</label>
-                        <input type="text" id="addRegion" name="region" required><br><br>
-
-                        <label for="description">Description:</label>
-                        <input type="text" id="addDescription" name="description" ><br><br>
-
-                        <label for="genre">Genre:</label>
-                        <input type="text" id="addGenre" name="genre" ><br><br>
-
-<!--                        <label for="watched">Watched:</label>-->
-<!--                        <input type="checkbox" id="addWatched" name="watched" ><br><br>-->
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="addNewEvent" data-dismiss="modal">Add Event</button>
-                    </div>
-                </div>
-
+            <div class="filter-group">
+                <label for="region">Region</label>
+                <select id="region">
+                </select>
             </div>
         </div>
 
+        <div class="toolbar-actions">
+            <button type="button" class="btn-primary-action" data-toggle="modal" data-target="#showAddModal">
+                + Add Event
+            </button>
+
+            <a href="https://nextflick-movie-recommender.streamlit.app/" target="_blank" class="btn-secondary-action" id="movieRecommendationButton">
+                Movie Recommender
+            </a>
+
+            <button type="button" id="compareSelected" class="btn-compare" style="display:none;" onclick="compareSelectedEvents()">
+                Compare Selected
+            </button>
+        </div>
     </div>
 
-    <!-- Event details Modal -->
+    <!-- Add Event Modal -->
+    <div class="modal fade" id="showAddModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Event</h4>
+                </div>
+                <div class="modal-body modal-form">
+                    <div class="form-group">
+                        <label for="addEventName">Event Name</label>
+                        <input type="text" id="addEventName" name="eventName" placeholder="e.g. The Renaissance" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="addStartYear">Start Year</label>
+                            <input type="text" id="addStartYear" name="startYear" placeholder="e.g. 1400" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="addEndYear">End Year</label>
+                            <input type="text" id="addEndYear" name="endYear" placeholder="e.g. 1600">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="addRegion">Region</label>
+                            <input type="text" id="addRegion" name="region" placeholder="e.g. Europe" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="addGenre">Genre</label>
+                            <input type="text" id="addGenre" name="genre" placeholder="e.g. Culture, Art">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addDescription">Description</label>
+                        <textarea id="addDescription" name="description" rows="3" placeholder="Describe the historical event..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-save" id="addNewEvent" data-dismiss="modal">Add Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
     <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="eventModalLabel">Event Details</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <!-- Event Details -->
                     <div class="event-detail">
-                        <label for="event_name">Event Name:</label>
+                        <label>Event Name</label>
                         <span id="event_name"></span>
                     </div>
-
-                    <div class="event-detail">
-                        <label for="event_start_year">Start Year:</label>
-                        <span id="event_start_year"></span>
+                    <div class="event-detail-row">
+                        <div class="event-detail half">
+                            <label>Start Year</label>
+                            <span id="event_start_year"></span>
+                        </div>
+                        <div class="event-detail half">
+                            <label>End Year</label>
+                            <span id="event_end_year"></span>
+                        </div>
                     </div>
-
                     <div class="event-detail">
-                        <label for="event_end_year">End Year:</label>
-                        <span id="event_end_year"></span>
-                    </div>
-
-                    <div class="event-detail">
-                        <label for="event_region">Region Of Event:</label>
+                        <label>Region</label>
                         <span id="event_region"></span>
                     </div>
-
                     <div class="event-detail">
-                        <label for="event_description">Description:</label>
+                        <label>Description</label>
                         <span id="event_description"></span>
                     </div>
-
                     <div class="event-detail">
-                        <label for="event_genres">Genres:</label>
+                        <label>Genres</label>
                         <span id="event_genres"></span>
                     </div>
-
                     <div class="event-detail">
-                        <label for="event_movies">Recommended Movies:</label>
+                        <label>Recommended Movies</label>
                         <span id="event_movies"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="edit_button" id="edit_event" data-dismiss="modal" aria-label="Edit">Edit</button>
-                    <button type="button" class="delete_button" id="delete_event" data-dismiss="modal" aria-label="Delete">Delete</button>
+                    <button type="button" class="btn btn-edit" id="edit_event" data-dismiss="modal" aria-label="Edit">Edit</button>
+                    <button type="button" class="btn btn-delete" id="delete_event" data-dismiss="modal" aria-label="Delete">Delete</button>
                 </div>
-
             </div>
         </div>
     </div>
-
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Edit Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Edit Event</h4>
                 </div>
-                <div class="modal-body">
-                    <label for="eventName">Event Name:</label>
-                    <input type="text" id="editEventName" name="eventName" required><br><br>
-
-                    <label for="startYear">Start Year:</label>
-                    <input type="text" id="editStartYear" name="startYear" required><br><br>
-
-                    <label for="endYear">End Year:</label>
-                    <input type="text" id="editEndYear" name="endYear" ><br><br>
-
-                    <label for="region">Region:</label>
-                    <input type="text" id="editRegion" name="region" required><br><br>
-
-                    <label for="description">Description:</label>
-                    <input type="text" id="editDescription" name="description" ><br><br>
-
-                    <div>
-                        <label for="genres">Genres:</label>
-                        <input type="text" id="editGenres" name="genres"><br><br>
-                        <ul id="deleteGenres"></ul><br><br>
+                <div class="modal-body modal-form">
+                    <div class="form-group">
+                        <label for="editEventName">Event Name</label>
+                        <input type="text" id="editEventName" name="eventName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="editStartYear">Start Year</label>
+                            <input type="text" id="editStartYear" name="startYear" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="editEndYear">End Year</label>
+                            <input type="text" id="editEndYear" name="endYear">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRegion">Region</label>
+                        <input type="text" id="editRegion" name="region" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Description</label>
+                        <textarea id="editDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGenres">Add Genres</label>
+                        <input type="text" id="editGenres" name="genres" placeholder="Comma-separated genres">
+                        <ul id="deleteGenres" class="genre-tag-list"></ul>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="save_button" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-save" id="save_button" data-dismiss="modal">Save Changes</button>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- Table with S.No, Name, Start year -->
-    <table id="eventsTable">
-        <thead>
-            <th>Compare</th>
-            <th>S.No</th>
-            <th>Name</th>
-            <th>Start Year</th>
-        </thead>
-        <tbody>
-        <!-- Rows will be added here dynamically using javascript-->
-        </tbody>
-    </table>
+    <!-- Events Table -->
+    <div class="table-container">
+        <table id="eventsTable">
+            <thead>
+                <tr>
+                    <th class="th-compare">Compare</th>
+                    <th class="th-sno">S.No</th>
+                    <th class="th-name">Event Name</th>
+                    <th class="th-year">Start Year</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- Rows will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>Built by Samiksha Khare &middot; Powered by Kafka, TF-IDF & AI</p>
+    </footer>
 
     <%- include('partials/chat_panel') %>
 </body>

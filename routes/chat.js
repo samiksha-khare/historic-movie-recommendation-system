@@ -223,7 +223,7 @@ ${relevantEvents.length > 0 ? `**Relevant events from our database:**\n${eventCo
 Guidelines:
 - Ground your answers in the database context when possible
 - If the question is about an event not in our database, answer from your knowledge but suggest they add it
-- Mention event names with their IDs like [event:ID] so users can click to view details
+- Mention relevant event names naturally in your response
 - Suggest relevant movies from our database when applicable
 - Be educational, engaging, and concise (2-4 paragraphs)`
             },
@@ -280,7 +280,7 @@ router.post('/timeline', async (req, res) => {
 
             genreContext = events.map(e => {
                 const g = genreMap[e.id] ? genreMap[e.id].join(', ') : 'N/A';
-                return `- [${e.name}](event:${e.id}) (${e.start_year}–${e.end_year || e.start_year}), ${e.region}, Genres: ${g}\n  ${e.description}`;
+                return `- ${e.name} (${e.start_year}–${e.end_year || e.start_year}), ${e.region}, Genres: ${g}\n  ${e.description}`;
             }).join('\n\n');
         }
 
@@ -295,7 +295,7 @@ ${genreContext || 'No events found for this time range.'}
 Guidelines:
 - Present events chronologically
 - Highlight connections and cause-effect relationships between events
-- Use the exact event name format [Event Name](event:ID) so they become clickable links
+- Mention event names naturally
 - If few events match, supplement with your knowledge but note those are not in the database
 - Keep the narrative engaging and educational`
             },
