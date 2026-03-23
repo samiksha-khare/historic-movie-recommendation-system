@@ -5,7 +5,7 @@
 3. Open new terminal: docker exec -it node_app /bin/bash
     a. Run Historic Events KafkaConsumer for real time events added -
     ```
-    python HistoricEventsKafkaConsumer.py
+    python3 HistoricEventsKafkaConsumer.py
     ```
 
 # To get new movies from TMDB and add them to the database, run the following steps:
