@@ -89,27 +89,12 @@ const ChatApp = (function () {
     // --- Markdown rendering ---
     function renderMarkdown(text) {
         if (typeof marked !== 'undefined' && marked.parse) {
-            let html = marked.parse(text);
-            // Convert event links [Name](event:ID) to clickable spans
-            html = html.replace(
-                /\[([^\]]+)\]\(event:(\d+)\)/g,
-                '<span class="chat-event-link" data-event-id="$2">$1</span>'
-            );
-            // Convert movie references [movie:ID] to data attributes
-            html = html.replace(
-                /\[movie:(\d+)\]/g,
-                '<span class="chat-movie-ref" data-movie-id="$1">[View]</span>'
-            );
-            return html;
+            return marked.parse(text);
         }
         // Fallback: basic formatting
         return text
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>')
-            .replace(
-                /\[([^\]]+)\]\(event:(\d+)\)/g,
-                '<span class="chat-event-link" data-event-id="$2">$1</span>'
-            );
+            .replace(/\n/g, '<br>');
     }
 
     // --- API calls ---
@@ -240,47 +225,7 @@ const ChatApp = (function () {
 
     // --- Post-process clickable links ---
     function postProcessLinks() {
-        // Event links
-        document.querySelectorAll('.chat-event-link').forEach(el => {
-            if (el.dataset.bound) return;
-            el.dataset.bound = 'true';
-            el.addEventListener('click', async () => {
-                const eventId = el.dataset.eventId;
-                const response = await getEventDetailsById(eventId);
-                document.getElementById("event_name").textContent = response.event_details[0].name;
-                document.getElementById("event_start_year").textContent = response.event_details[0].start_year;
-                document.getElementById("event_end_year").textContent = response.event_details[0].end_year;
-                document.getElementById("event_region").textContent = response.event_details[0].region;
-                document.getElementById("event_description").textContent = response.event_details[0].description;
-
-                let genres = response.genres.map(g => `<span>${g.genre}</span>`);
-                document.getElementById("event_genres").innerHTML = genres.join(", ");
-
-                const TMDB_BASE_URL = 'https://image.tmdb.org/t/p/w92';
-                const TMDB_DETAIL_BASE = 'https://www.themoviedb.org/movie';
-                let moviesHtml = response.movies.map(movie => {
-                    const src = movie.poster_path
-                        ? `${TMDB_BASE_URL}${movie.poster_path}`
-                        : 'path/to/your-placeholder.jpg';
-                    return `
-                        <div class="movie-poster">
-                            <img src="${src}" alt="${movie.title}" title="${movie.title}" loading="lazy" />
-                            <div class="movie-title">
-                                <a href="${TMDB_DETAIL_BASE}/${movie.id}" target="_blank" rel="noopener">${movie.title.split(":")[0]}</a>
-                            </div>
-                            <div class="movie-chat-links">
-                                <a class="why-link" data-event-id="${eventId}" data-movie-id="${movie.id}">Why?</a>
-                                <a class="discuss-link" data-event-id="${eventId}" data-movie-id="${movie.id}">Discuss</a>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                document.getElementById('event_movies').innerHTML = moviesHtml;
-                document.getElementById("edit_event").value = eventId;
-                document.getElementById("delete_event").value = eventId;
-                $('#eventModal').modal('show');
-            });
-        });
+        // No-op — event ID linking removed for reliability
     }
 
     // --- Send message ---
