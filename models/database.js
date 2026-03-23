@@ -161,6 +161,72 @@ export async function getMovieDetailsByEventId(event_id) {
     return result[0];
 }
 
+// --- Chat capability query functions ---
+
+export async function getMovieById(movieId) {
+    const result = await sql.query(
+        `SELECT id, title, release_date, overview, poster_path FROM Movies WHERE id = ?`,
+        [movieId]
+    );
+    return result[0];
+}
+
+export async function searchMoviesByText(query) {
+    const result = await sql.query(
+        `SELECT id, title, release_date, overview, poster_path
+         FROM Movies
+         WHERE MATCH(title, overview) AGAINST(? IN NATURAL LANGUAGE MODE)
+         LIMIT 20`,
+        [query]
+    );
+    return result[0];
+}
+
+export async function searchEventsByKeyword(keyword) {
+    const likePattern = `%${keyword}%`;
+    const result = await sql.query(
+        `SELECT id, name, start_year, end_year, region, description
+         FROM Events
+         WHERE name LIKE ? OR description LIKE ?
+         ORDER BY start_year
+         LIMIT 10`,
+        [likePattern, likePattern]
+    );
+    return result[0];
+}
+
+export async function getAllEventsCompact() {
+    const result = await sql.query(
+        `SELECT id, name, start_year, region FROM Events ORDER BY start_year`
+    );
+    return result[0];
+}
+
+export async function getEventsByTimeRange(startYear, endYear, region) {
+    let query = `SELECT id, name, start_year, end_year, region, description
+                 FROM Events
+                 WHERE start_year >= ? AND start_year <= ?`;
+    const params = [startYear, endYear];
+
+    if (region && region !== 'All') {
+        query += ` AND region = ?`;
+        params.push(region);
+    }
+
+    query += ` ORDER BY start_year`;
+    const result = await sql.query(query, params);
+    return result[0];
+}
+
+export async function getGenresByEventIds(eventIds) {
+    if (!eventIds || eventIds.length === 0) return [];
+    const result = await sql.query(
+        `SELECT event_id, genre FROM Event_Genres WHERE event_id IN (?)`,
+        [eventIds]
+    );
+    return result[0];
+}
+
 
 
 

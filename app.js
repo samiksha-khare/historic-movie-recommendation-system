@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import events from './routes/events.js';
+import chat from './routes/chat.js';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -25,6 +26,7 @@ app.use(express.json());
 
 //Routes
 app.use('/', events);
+app.use('/api/chat', chat);
 
 // Start Server
 app.listen(3000, function(){
